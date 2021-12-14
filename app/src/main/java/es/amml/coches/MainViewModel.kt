@@ -6,35 +6,25 @@ class MainViewModel(
     sealed class State : BaseViewModel.State() {
         object Loading : State()
         data class Error(val error: Throwable) : State()
-        data class Loaded(val items: List<Item>) : State()
+        data class Loaded(val items: List<CarEntry>) : State()
     }
 
-    data class Item(
+    /*data class Item(
         val title: String,
-        val incidenceLast14Days: Float,
-        val color: Color
-    ) {
-        enum class Color {
-            GREEN, YELLOW, ORANGE, RED
-        }
+        val year: Int,
 
+    ) {
         companion object {
-            fun fromEntry(entry: IncidenceEntry) = Item(
+            fun fromEntry(entry: CarEntry) = Item(
                 title = entry.title,
-                incidenceLast14Days = entry.incidenceLast14Days,
-                color = when {
-                    entry.incidenceLast14Days < 100 -> Color.GREEN
-                    entry.incidenceLast14Days < 250 -> Color.YELLOW
-                    entry.incidenceLast14Days < 350 -> Color.ORANGE
-                    else -> Color.RED
-                }
+                year = entry.year,
             )
         }
-    }
+    }*/
 
     suspend fun initialState() {
         viewState.value = State.Loading
-        val entries = getIncidence()
-        viewState.value = State.Loaded(entries.map { Item.fromEntry(it) })
+        val entries = getCars()
+        viewState.value = State.Loaded(entries)
     }
 }

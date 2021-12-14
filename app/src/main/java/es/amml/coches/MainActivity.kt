@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                     binding.textView.text = "Loading"
                 }
                 is MainViewModel.State.Loaded -> {
-                    binding.textView.text = "Item loaded"
+                    binding.textView.text = "${state.items.count()}Item loaded"
                     //setupIncidenceList(state.items)
                 }
                 is MainViewModel.State.Error -> {
